@@ -30,6 +30,7 @@ buildNumber.properties
 .c9/
 *.launch
 .settings/
+.mvn/
 
 # misc
 /.sass-cache
