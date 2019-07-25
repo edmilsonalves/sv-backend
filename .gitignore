@@ -33,6 +33,8 @@ buildNumber.properties
 .mvn/
 mvnw/
 mvnw
+mvnw
+mvnw.cmd
 
 # misc
 /.sass-cache
