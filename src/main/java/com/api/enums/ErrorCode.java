@@ -2,18 +2,18 @@ package com.api.enums;
 
 public enum ErrorCode {
 
-	SIS_1("SIS-1", "Parametros inv·lidos."),
-	SIS_2("SIS-2", "Registro n„o encontrado."),
-	SIS_3("SIS-3", "O campo {0} È obrigatÛrio."),
-	SIS_4("SIS-4", "O campo {0} n„o È uma data v·lida ({1})."),
-	SIS_5("SIS-5", "Esse registro est· vinculado e n„o pode ser excluÌdo."),
-	SIS_6("SIS-6", "Esse cÛdigo busca j· est· sendo utilizado em outro produto!."),
+	SIS_1("SIS-1", "Parametros inv√°lidos."),
+	SIS_2("SIS-2", "Registro n√£o encontrado."),
+	SIS_3("SIS-3", "O campo {0} obrigat√≥rio."),
+	SIS_4("SIS-4", "O campo {0} n√£o √© v√°lido ({1})."),
+	SIS_5("SIS-5", "Esse registro est√° vinculado e n√£o pode ser exclu√≠do."),
+	SIS_6("SIS-6", "Esse c√≥digo busca j√° est√° sendo utilizado em outro produto!."),
 	
 	EXP_1("EXP-1", "Ocorreu um erro desconhecido."),
-	EXP_2("EXP_2", "Ocorreu um erro de comunicaÁ„o em nossos serviÁos."),
+	EXP_2("EXP_2", "Ocorreu um erro de comunica√ß√£o em nossos servi√ßos."),
 	
 	
-	EMAIL_1("EMAIL_1", "O modelo fornecido n„o nulo, vazio ou em branco.");
+	EMAIL_1("EMAIL_1", "O modelo fornecido n√£o nulo, vazio ou em branco.");
 	
 	
 
