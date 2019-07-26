@@ -30,6 +30,8 @@ public class ProdutoDTO {
 
 	private Boolean possuiVariacao;
 
+	private int qtdeVariacao;
+
 	private BigDecimal peso;
 
 	private BigDecimal largura;
@@ -47,9 +49,6 @@ public class ProdutoDTO {
 	// Estoque
 	private Integer estoqueAtual;
 	private Integer estoqueMinimo;
-
-//	private List<OptionDTO> listCategoria;
-//	private List<OptionDTO> listUnidadeMedida;
 
 	private String imagemDestaque;
 	private List<ImagemDTO> listImagem;
@@ -242,28 +241,6 @@ public class ProdutoDTO {
 		this.tipoDescricao = tipoDescricao;
 	}
 
-//	public List<OptionDTO> getListCategoria() {
-//		if (this.listCategoria == null) {
-//			this.listCategoria = new ArrayList<>(0);
-//		}
-//		return this.listCategoria;
-//	}
-//
-//	public void setListCategoria(List<OptionDTO> listCategoria) {
-//		this.listCategoria = listCategoria;
-//	}
-//
-//	public List<OptionDTO> getListUnidadeMedida() {
-//		if (this.listUnidadeMedida == null) {
-//			this.listUnidadeMedida = new ArrayList<>(0);
-//		}
-//		return this.listUnidadeMedida;
-//	}
-//
-//	public void setListUnidadeMedida(List<OptionDTO> listUnidadeMedida) {
-//		this.listUnidadeMedida = listUnidadeMedida;
-//	}
-
 	public BigDecimal getPrecoPromocional() {
 		return precoPromocional;
 	}
@@ -301,6 +278,14 @@ public class ProdutoDTO {
 
 	public void setAbaManipulada(AbaManipuladaDTO abaManipulada) {
 		this.abaManipulada = abaManipulada;
+	}
+
+	public int getQtdeVariacao() {
+		return qtdeVariacao;
+	}
+
+	public void setQtdeVariacao(int qtdeVariacao) {
+		this.qtdeVariacao = qtdeVariacao;
 	}
 
 }
