@@ -272,6 +272,10 @@ public class ProdutoService {
 		entities.forEach(produto -> {
 			ProdutoDTO dto = convertSemImagemToDto(produto);
 
+			if (produto.getListVariacao() != null && !produto.getListVariacao().isEmpty()) {
+				dto.setQtdeVariacao(produto.getListVariacao().size());
+			}
+
 			Imagem imagem = null;
 			if (dto.getPossuiVariacao()) {
 				for (Variacao variacao : produto.getListVariacao()) {
