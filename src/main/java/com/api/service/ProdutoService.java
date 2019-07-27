@@ -22,12 +22,9 @@ import com.api.dto.ProdutoDTO;
 import com.api.dto.TipoAtributoDTO;
 import com.api.dto.VariacaoDTO;
 import com.api.entity.Atributo;
-import com.api.entity.Categoria;
-import com.api.entity.Estoque;
 import com.api.entity.Imagem;
 import com.api.entity.Produto;
 import com.api.entity.TipoAtributo;
-import com.api.entity.UnidadeMedida;
 import com.api.entity.Variacao;
 import com.api.entity.VariacaoItem;
 import com.api.enums.ErrorCode;
@@ -74,31 +71,32 @@ public class ProdutoService {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public ProdutoDTO insert(ProdutoDTO produtoDTO) throws BusinessException {
-		Produto produto = new Produto();
 
 		if (!SUtils.isNullOrEmpty(produtoDTO.getCodigo())) {
 			Produto produtoPK = this.produtoRepository.findByCodigo(produtoDTO.getCodigo());
 
 			if (!SUtils.isNull(produtoPK) && !produtoPK.getCodigo().equals(produtoDTO.getCodigo())) {
-				throw new BusinessException("Esse Código busca já está sendo utilizado em outro produto!");
+				throw new BusinessException(ErrorCode.SIS_6);
 			}
 		}
 
-		BeanUtils.copyProperties(produtoDTO, produto);
+		Produto produto = new Produto();
+		BeanUtils.copyProperties(produtoDTO, produto, "listCategoria", "listUnidadeMedida", "listImagem",
+				"listVariacao", "abaManipulada");
+
 		produto.setStatus(StatusProdutoEnum.findById(produtoDTO.getStatus()));
 		produto.setTipo(TipoProdutoEnum.findById(produtoDTO.getTipo()));
 
-		Estoque estoque = new Estoque();
-		// estoque.setId(produtoDTO.getIdEstoque());
-		// estoque.setAlerta(produtoDTO.getEstoqueAlerta());
-		// estoque.setAtual(produtoDTO.getEstoqueAtual());
-		// estoque = this.estoqueRepository.save(estoque);
-		// produto.setIdEstoque(estoque.getId());
-		//
-		// produto = this.produtoRepository.save(produto);
-		// produto.setEstoque(estoque);
+		produto = this.produtoRepository.save(produto);
+		if (produto.getPossuiVariacao()) {
+			salvarVariacao(produto.getId(), produtoDTO.getListVariacao());
+		} else {
+			salvarImagem(produtoDTO.getId(), produtoDTO.getListImagem());
+		}
 
-		return convertToDto(this.produtoRepository.save(produto));
+		produtoDTO = findById(produto.getId());
+
+		return produtoDTO;
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
@@ -122,17 +120,40 @@ public class ProdutoService {
 
 		if (produto.getPossuiVariacao()) {
 			salvarVariacao(produto.getId(), produtoDTO.getListVariacao());
+		} else {
+			salvarImagem(produtoDTO.getId(), produtoDTO.getListImagem());
 		}
-
-		// produto.getEstoque().setAlerta(produtoDTO.getEstoqueAlerta());
-		// produto.getEstoque().setAtual(produtoDTO.getEstoqueAtual());
-		// this.estoqueRepository.save(produto.getEstoque());
 
 		produto = this.produtoRepository.save(produto);
 
 		produtoDTO = findById(produto.getId());
 
 		return produtoDTO;
+	}
+
+	private void salvarImagem(Long idProduto, List<ImagemDTO> listImagem) {
+		
+		if (idProduto != null) {
+			this.imagemRepository.deleteByIdProduto(idProduto);
+		}
+		
+		if (listImagem != null && !listImagem.isEmpty()) {
+			for (ImagemDTO imagemDTO : listImagem) {
+				Imagem imagem = new Imagem();
+
+				BeanUtils.copyProperties(imagemDTO, imagem);
+
+				imagem.setIdProduto(idProduto);	
+				
+				String remove = "data:" + imagem.getType() + ";base64,";
+
+				Base64 codec = new Base64();
+				byte[] bytes = codec.decode(imagemDTO.getFile().replace(remove, ""));
+				imagem.setFile(bytes);
+				
+				imagem = this.imagemRepository.save(imagem);
+			}
+		}
 	}
 
 	private void salvarVariacao(Long idProduto, List<VariacaoDTO> listVariacao) {

@@ -62,29 +62,11 @@ public class ProdutoController {
 
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> insert(@RequestBody ProdutoDTO produto) {
-		BaseResponse response = new BaseResponse();
+	public ResponseEntity<?> insert(@RequestBody ProdutoDTO request) {
+		
+		ProdutoDTO produto = this.produtoService.insert(request);
 
-		try {
-
-			System.out.println(produto);
-
-			// if (produto.getId() != null) {
-			// produto = this.produtoService.update(produto);
-			// } else {
-			// produto = this.produtoService.insert(produto);
-			// }
-			//
-			// response.setEntity(produto);
-
-			response.setMessage("Registro alterado com sucesso.");
-		} catch (Exception e) {
-
-			response.setMessage(e.getMessage());
-			e.printStackTrace();
-		}
-
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		return ResponseEntity.ok(produto);
 	}
 
 	@CrossOrigin
