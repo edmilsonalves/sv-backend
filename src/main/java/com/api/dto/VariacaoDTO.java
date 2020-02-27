@@ -22,7 +22,7 @@ public class VariacaoDTO implements Serializable {
 	private Integer estoqueAtual;
 	private BigDecimal precoPromocional;
 	private List<TipoAtributoDTO> listTipoAtributo;
-	private List<ImagemDTO> listImagem;
+	private List<FileDTO> listImagem;
 
 	public Long getId() {
 		return id;
@@ -83,14 +83,14 @@ public class VariacaoDTO implements Serializable {
 		this.listTipoAtributo = listTipoAtributo;
 	}
 
-	public List<ImagemDTO> getListImagem() {
+	public List<FileDTO> getListImagem() {
 		if (this.listImagem == null) {
 			this.listImagem = new ArrayList<>(0);
 		}
 		return listImagem;
 	}
 
-	public void setListImagem(List<ImagemDTO> listImagem) {
+	public void setListImagem(List<FileDTO> listImagem) {
 		this.listImagem = listImagem;
 	}
 

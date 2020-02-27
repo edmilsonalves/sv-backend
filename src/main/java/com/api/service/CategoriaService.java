@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.api.dto.OptionDTO;
 import com.api.entity.Categoria;
-import com.api.entity.Produto;
+import com.api.entity.NotaFiscal;
 import com.api.enums.ErrorCode;
 import com.api.exception.BusinessException;
 import com.api.repository.CategoriaRepository;
-import com.api.repository.ProdutoRepository;
+import com.api.repository.NotaFiscalRepository;
 import com.api.util.SUtils;
 
 @Service
@@ -24,7 +24,7 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRepository;
 
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private NotaFiscalRepository produtoRepository;
 
 	public List<OptionDTO> findAll() {
 		List<Categoria> list = this.categoriaRepository.findAll();
@@ -47,7 +47,7 @@ public class CategoriaService {
 
 	public void delete(Long idCategoria) {
 
-		List<Produto> produtoList = this.produtoRepository.findByIdCategoria(idCategoria);
+		List<NotaFiscal> produtoList = this.produtoRepository.findByIdCategoria(idCategoria);
 
 		if (!SUtils.isNullOrEmpty(produtoList)) {
 			throw new BusinessException(ErrorCode.SIS_4);
